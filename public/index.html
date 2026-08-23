@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frequencia — sala de voz e video</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TELA 1: entrar na sala -->
+<main id="screen-join" class="screen screen-join">
+  <div class="join-card">
+    <div class="brand">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">frequencia</span>
+    </div>
+    <h1>Sintonize com a galera</h1>
+    <p class="sub">Voz, video e tela compartilhada, direto entre voces. Sem instalar nada.</p>
+
+    <form id="join-form">
+      <label class="field">
+        <span>Seu nome</span>
+        <input id="input-name" type="text" maxlength="24" placeholder="Como te chamam?" autocomplete="off" required />
+      </label>
+
+      <label class="field">
+        <span>Canal</span>
+        <input id="input-room" type="text" maxlength="40" placeholder="ex: quinta-dos-boss" autocomplete="off" required />
+      </label>
+
+      <div class="join-actions">
+        <button type="submit" class="btn btn-primary">Entrar no canal</button>
+        <button type="button" id="btn-random-room" class="btn btn-ghost">Gerar canal novo</button>
+      </div>
+
+      <details class="devices-panel">
+        <summary>Escolher microfone/camera (se o padrao nao funcionar)</summary>
+        <div class="devices-inner">
+          <label class="field">
+            <span>Microfone</span>
+            <select id="select-mic"><option value="">Padrao do sistema</option></select>
+          </label>
+          <label class="field">
+            <span>Camera</span>
+            <select id="select-cam"><option value="">Padrao do sistema</option></select>
+          </label>
+          <button type="button" id="btn-detect-devices" class="btn btn-ghost btn-small">Detectar dispositivos</button>
+        </div>
+      </details>
+    </form>
+
+    <p class="hint" id="join-hint"></p>
+  </div>
+</main>
+
+<!-- TELA 2: em chamada -->
+<main id="screen-call" class="screen screen-call hidden">
+  <header class="call-topbar">
+    <div class="channel-tag">
+      <span class="pulse" aria-hidden="true"></span>
+      <span class="channel-label">canal</span>
+      <code id="room-name-display">—</code>
+      <button id="btn-copy-link" class="btn-icon" title="Copiar link do canal">copiar link</button>
+    </div>
+    <div class="topbar-status" id="connection-status">conectando…</div>
+    <button id="btn-toggle-log" class="btn-icon" title="Mostrar diagnostico">diagnostico</button>
+  </header>
+
+  <div id="debug-log" class="debug-log hidden"></div>
+
+  <section id="video-grid" class="video-grid"></section>
+
+  <footer class="controlbar">
+    <button id="btn-mic" class="ctrl-btn" title="Microfone">
+      <span class="ctrl-icon" data-on="🎙" data-off="🔇">🎙</span>
+      <span class="ctrl-label">Microfone</span>
+      <span class="mic-meter" id="mic-meter"><span class="mic-meter-fill" id="mic-meter-fill"></span></span>
+    </button>
+    <button id="btn-cam" class="ctrl-btn" title="Camera">
+      <span class="ctrl-icon" data-on="📷" data-off="🚫">📷</span>
+      <span class="ctrl-label">Camera</span>
+    </button>
+    <button id="btn-share" class="ctrl-btn" title="Compartilhar tela">
+      <span class="ctrl-icon">🖥</span>
+      <span class="ctrl-label">Compartilhar</span>
+    </button>
+    <button id="btn-leave" class="ctrl-btn ctrl-danger" title="Sair do canal">
+      <span class="ctrl-icon">⏻</span>
+      <span class="ctrl-label">Sair</span>
+    </button>
+  </footer>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>
