@@ -533,9 +533,13 @@ btnShare.addEventListener("click", async () => {
     // audio:true faz o navegador oferecer a opcao "compartilhar audio" no
     // seletor de tela (precisa marcar essa caixinha na hora de escolher).
     screenStream = await navigator.mediaDevices.getDisplayMedia({
-      video: { frameRate: { ideal: SCREEN_MAX_FRAMERATE } },
-      audio: true,
-    });
+  video: {
+    frameRate: { ideal: 120, max: 144 },
+    width: { ideal: 1920 },
+    height: { ideal: 1080 }
+  },
+  audio: true // ou false se não quiser som
+});
   } catch (err) {
     return; // usuario cancelou o seletor de tela
   }
@@ -549,7 +553,7 @@ btnShare.addEventListener("click", async () => {
     peers.forEach((peer) => {
       const sender = peer.pc.addTrack(track, screenStream);
       if (track.kind === "video") {
-        capSender(sender, { maxBitrate: SCREEN_MAX_BITRATE, maxFramerate: SCREEN_MAX_FRAMERATE });
+       capSender(sender, { maxBitrate: 8000000, maxFramerate: 120 });
       }
     });
   });
