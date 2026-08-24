@@ -640,3 +640,38 @@ function handleFullscreenChange() {
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+// ===== FULLSCREEN FIX - La Volte =====
+(function () {
+  const screenCall = document.getElementById('screen-call');
+  const videoGrid = document.getElementById('video-grid');
+  function adjustVideoAspectRatios() {
+    if (!videoGrid) return;
+    const videos = videoGrid.querySelectorAll('video');
+    videos.forEach((video) => {
+      if (video.readyState >= 1 && video.videoWidth && video.videoHeight) {
+        video.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+      } else {
+        video.addEventListener('loadedmetadata', () => {
+          video.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+        }, { once: true });
+      }
+    });
+  }
+  function handleFullscreenChange() {
+    const isFullscreen = !!(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement
+    );
+    if (isFullscreen && videoGrid) {
+      adjustVideoAspectRatios();
+    }
+  }
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
+  document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+  document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+  if (videoGrid) {
+    const observer = new MutationObserver(() => adjustVideoAspectRatios());
+    observer.observe(videoGrid, { childList: true });
+  }
+})();
