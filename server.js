@@ -73,6 +73,6 @@ io.on("connection", (socket) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`CallRoom rodando em http://localhost:${PORT}`);
 });
