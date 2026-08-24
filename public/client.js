@@ -534,7 +534,7 @@ btnShare.addEventListener("click", async () => {
     // seletor de tela (precisa marcar essa caixinha na hora de escolher).
     screenStream = await navigator.mediaDevices.getDisplayMedia({
   video: {
-    frameRate: { ideal: 120, max: 144 },
+  frameRate: { ideal: 60, max: 60 },
     width: { ideal: 1920 },
     height: { ideal: 1080 }
   },
@@ -553,7 +553,7 @@ btnShare.addEventListener("click", async () => {
     peers.forEach((peer) => {
       const sender = peer.pc.addTrack(track, screenStream);
       if (track.kind === "video") {
-       capSender(sender, { maxBitrate: 8000000, maxFramerate: 120 });
+     capSender(sender, { maxBitrate: 4000000, maxFramerate: 60 });
       }
     });
   });
