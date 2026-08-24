@@ -612,3 +612,31 @@ btnLeave.addEventListener("click", () => {
 window.addEventListener("beforeunload", () => {
   if (socket) socket.emit("leave");
 });
+const container = document.querySelector('.video-container');
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    container.requestFullscreen().catch(err => {
+      console.error(`Erro ao entrar em tela cheia: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+function handleFullscreenChange() {
+  const isFullscreen = !!document.fullscreenElement;
+  document.querySelectorAll('video').forEach(video => {
+    if (isFullscreen) {
+      video.style.width = '100%';
+      video.style.height = '100%';
+    } else {
+      video.style.width = '';
+      video.style.height = '';
+    }
+  });
+}
+
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
