@@ -538,7 +538,11 @@ btnShare.addEventListener("click", async () => {
     width: { ideal: 1920 },
     height: { ideal: 1080 }
   },
-  audio: true // ou false se não quiser som
+  audio: {
+  echoCancellation: true,
+  noiseSuppression: true,
+  autoGainControl: true
+}
 });
   } catch (err) {
     return; // usuario cancelou o seletor de tela
@@ -554,7 +558,6 @@ btnShare.addEventListener("click", async () => {
       const sender = peer.pc.addTrack(track, screenStream);
       if (track.kind === "video") {
      capSender(sender, { maxBitrate: 4000000, maxFramerate: 60 });
-      }
     });
   });
   socket.emit("meta", { type: "screen-start", streamId: screenStream.id });
