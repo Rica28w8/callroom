@@ -418,37 +418,60 @@ input{ font-family:inherit; }
   flex-direction: column;
   background: #000;
 }
-/* Fallback para prefixos de navegadores */
-.video-container:-webkit-full-screen,
-.video-container:-moz-full-screen {
+/* ===== FULLSCREEN FIX - La Volte ===== */
+#screen-call:fullscreen {
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000;
 }
-/* Grid de vídeos dentro do fullscreen */
-.video-container:fullscreen .video-grid {
-  width: 100%;
-  height: calc(100% - 60px);
+/* Prefixos de navegadores */
+#screen-call:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+#screen-call:-moz-full-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+/* Fundo atrás do elemento em tela cheia */
+#screen-call::backdrop {
+  background: #000;
+}
+/* Grid de vídeos ocupa o espaço disponível */
+#screen-call:fullscreen #video-grid {
+  flex: 1;
+  min-height: 0;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 8px;
+  padding: 8px;
   place-items: center;
+  overflow: hidden;
 }
-/* Vídeos individuais */
-.video-container:fullscreen video {
+/* Cada vídeo mantém proporção original */
+#screen-call:fullscreen #video-grid video {
   width: 100%;
   height: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  background: #111;
 }
-/* Controles flutuando por cima */
-.video-container:fullscreen .controls {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+/* Barra de controles embaixo */
+#screen-call:fullscreen .controlbar {
+  flex-shrink: 0;
+  position: relative;
+  width: 100%;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.6);
-}
-/* Fundo atrás do elemento em tela cheia */
-.video-container::backdrop {
-  background: #000;
+  background: rgba(0, 0, 0, 0.75);
 }
