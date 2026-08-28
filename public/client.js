@@ -224,7 +224,15 @@ function log(msg) {
 
 function connectSocket() {
   log(`conectando ao servidor de sinalizacao (${location.origin})…`);
-  socket = io();
+    const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${wsProtocol}//${location.host}`;
+  log(`conectando ao servidor de sinalizacao (${wsUrl})…`);
+  socket = io(wsUrl, {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 1000
+  });
 
   socket.on("connect", () => {
     connectionStatus.textContent = "conectado";
