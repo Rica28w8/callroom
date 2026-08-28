@@ -69,5 +69,6 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Servidor rodando!`);
+  console.log(`✅ Servidor rodando na porta ${PORT}`);
+  console.log(`✅ Pronto pra receber conexões!`);
 });
