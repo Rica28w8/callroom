@@ -739,12 +739,17 @@ function getAudioCtx() {
     audioCtx = new AudioCtx();
   }
   return audioCtx;
-}
+}document.addEventListener('click', () => {
+  const ctx = getAudioCtx();
+  if (ctx.state === 'suspended') {
+    ctx.resume();
+  }
+}, { once: true });
 
 function setupVolumeControl(tile, audioTrack) {
   if (tile.gainNode) return;
   try {
-    const ctx = getAudioCtx();
+    const ctx = getAudioCtx();if (ctx.state === 'suspended') ctx.resume();
     const source = ctx.createMediaStreamSource(new MediaStream([audioTrack]));
     const gainNode = ctx.createGain();
     gainNode.gain.value = 1;
