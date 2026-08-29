@@ -706,9 +706,9 @@ function buildTile(id, label, isLocal, isScreen) {
   if (!isLocal) {
     volumeSlider = document.createElement("input");
     volumeSlider.type = "range";
-    volumeSlider.className = "tile-volume";
+    volumeSlider.className = "";
     volumeSlider.min = "0";
-    volumeSlider.max = "200";
+    volumeSlider.max = "100";
     volumeSlider.value = "100";
     volumeSlider.title = "Volume";
     wrapper.appendChild(volumeSlider);
@@ -728,7 +728,7 @@ function getTileParts(id) {
     wrapper,
     video: wrapper.querySelector("video"),
     labelEl: wrapper.querySelector(".tile-label"),
-    volumeSlider: wrapper.querySelector(".tile-volume"),
+    volumeSlider: wrapper.querySelector("."),
   };
 }
 
