@@ -775,4 +775,5 @@ function attachStreamToTile(tile, stream, isLocal) {
   tile.video.srcObject = stream;
   const audioTrack = stream.getAudioTracks()[0];
   if (!isLocal && audioTrack) setupVolumeControl(tile, audioTrack);
-}}
+}
+}
