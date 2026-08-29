@@ -49,7 +49,7 @@ const micMeterFill = document.getElementById("mic-meter-fill");
 // limites de banda/CPU: camera fica leve (a call nao e o foco quando alguem
 // esta jogando), tela compartilhada prioriza fluidez (fps) sobre nitidez.
 const CAMERA_MAX_BITRATE = 450_000; // ~450kbps é suficiente pra 360p de webcam
-const SCREEN_MAX_BITRATE = 2_500_000; // ~2.5mbps: boa leitura de tela sem pesar
+const SCREEN_MAX_BITRATE = 6_000_000; // ~2.5mbps: boa leitura de tela sem pesar
 const SCREEN_MAX_FRAMERATE = 30;
 
 // id -> { pc, polite, makingOffer, ignoreOffer, name, screenStreamId }
