@@ -548,8 +548,6 @@ btnShare.addEventListener("click", async () => {
     height: { ideal: 1080 }
   },
   audio: true   // ✅ SÓ ISSO!
-})
-}
 });
   } catch (err) {
     return; // usuario cancelou o seletor de tela
