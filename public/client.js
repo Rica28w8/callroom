@@ -765,10 +765,6 @@ function setupVolumeControl(tile, audioTrack) {
   }
 function attachStreamToTile(tile, stream, isLocal) {
   tile.video.srcObject = stream;
-  
-  // ... tem mais código aqui ...
-
-  // ✅ COLA ESSAS 2 LINHAS NO FINAL DA FUNÇÃO!
   const audioTrack = stream.getAudioTracks()[0];
   if (!isLocal && audioTrack) setupVolumeControl(tile, audioTrack);
-}}
+}
