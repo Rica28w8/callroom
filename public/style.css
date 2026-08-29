@@ -474,4 +474,17 @@ input{ font-family:inherit; }
   width: 100%;
   z-index: 10;
   background: rgba(0, 0, 0, 0.75);
+.tile-volume {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 38px;
+  width: calc(100% - 20px);
+  opacity: 0;
+  transition: opacity 0.15s;
 }
+
+.tile:hover .tile-volume,
+.tile:focus-within .tile-volume {
+  opacity: 1;
+}}
