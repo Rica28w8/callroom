@@ -671,23 +671,29 @@ document.addEventListener('mozfullscreenchange', handleFullscreenChange);
     });
   }
   function handleFullscreenChange() {
-    const isFullscreen = !!(
-      document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement
-    );
-    if (isFullscreen && videoGrid) {
-      adjustVideoAspectRatios();
+  const isFullScreen = !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement
+  );
+
+  // Se NÃO está em tela cheia → reseta o vídeo e evita duplicação
+  if (!isFullScreen) {
+    // Reseta estilo do vídeo para não duplicar
+    const video = document.querySelector("video");
+    if (video) {
+      video.style.width = "100%";
+      video.style.height = "auto";
+      video.style.transform = "none";
+      video.style.objectFit = "contain";
     }
   }
-  document.addEventListener('fullscreenchange', handleFullscreenChange);
-  document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-  document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-  if (videoGrid) {
-    const observer = new MutationObserver(() => adjustVideoAspectRatios());
-    observer.observe(videoGrid, { childList: true });
+
+  if (isLocal && videoGrid) {
+    adjustVideoAspectRatios();
   }
-})();
+}
 function buildTile(id, label, isLocal, isScreen) {
   const wrapper = document.createElement("div");
   wrapper.className = "tile";
