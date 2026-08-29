@@ -691,3 +691,84 @@ document.addEventListener('mozfullscreenchange', handleFullscreenChange);
     observer.observe(videoGrid, { childList: true });
   }
 })();
+function buildTile(id, label, isLocal, isScreen) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "tile";
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.playsInline = true;
+  if (isLocal) video.muted = true;
+  const labelEl = document.createElement("div");
+  labelEl.className = "tile-label";
+  labelEl.textContent = label;
+  const expandBtn = document.createElement("button");
+  expandBtn.className = "tile-expand";
+  expandBtn.textContent = "⛶";
+
+  let volumeSlider = null;
+  if (!isLocal) {
+    volumeSlider = document.createElement("input");
+    volumeSlider.type = "range";
+    volumeSlider.className = "tile-volume";
+    volumeSlider.min = "0";
+    volumeSlider.max = "200";
+    volumeSlider.value = "100";
+    volumeSlider.title = "Volume";
+    wrapper.appendChild(volumeSlider);
+  }
+
+  wrapper.appendChild(video);
+  wrapper.appendChild(labelEl);
+  wrapper.appendChild(expandBtn);
+
+  return { wrapper, video, labelEl, expandBtn, volumeSlider };
+}
+
+function getTileParts(id) {
+  const wrapper = videoGrid.querySelector(`[data-tile-id="${CSS.escape(id)}"]`);
+  if (!wrapper) return null;
+  return {
+    wrapper,
+    video: wrapper.querySelector("video"),
+    labelEl: wrapper.querySelector(".tile-label"),
+    volumeSlider: wrapper.querySelector(".tile-volume"),
+  };
+}
+
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioCtx();
+  }
+  return audioCtx;
+}
+
+function setupVolumeControl(tile, audioTrack) {
+  if (tile.gainNode) return;
+  try {
+    const ctx = getAudioCtx();
+    const source = ctx.createMediaStreamSource(new MediaStream([audioTrack]));
+    const gainNode = ctx.createGain();
+    gainNode.gain.value = 1;
+    source.connect(gainNode).connect(ctx.destination);
+    tile.gainNode = gainNode;
+    tile.video.muted = true;
+
+    if (tile.volumeSlider) {
+      tile.volumeSlider.addEventListener("input", () => {
+        gainNode.gain.value = tile.volumeSlider.value / 100;
+      });
+    }
+  } catch (err) {
+    console.warn("controle de volume indisponível:", err);
+  }
+function attachStreamToTile(tile, stream, isLocal) {
+  tile.video.srcObject = stream;
+  
+  // ... tem mais código aqui ...
+
+  // ✅ COLA ESSAS 2 LINHAS NO FINAL DA FUNÇÃO!
+  const audioTrack = stream.getAudioTracks()[0];
+  if (!isLocal && audioTrack) setupVolumeControl(tile, audioTrack);
+}}
