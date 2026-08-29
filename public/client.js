@@ -540,16 +540,15 @@ btnShare.addEventListener("click", async () => {
   try {
     // audio:true faz o navegador oferecer a opcao "compartilhar audio" no
     // seletor de tela (precisa marcar essa caixinha na hora de escolher).
-    screenStream = await navigator.mediaDevices.getDisplayMedia({
+
+ screenStream = await navigator.mediaDevices.getDisplayMedia({
   video: {
-  frameRate: { ideal: 60, max: 60 },
+    frameRate: { ideal: 60, max: 60 },
     width: { ideal: 1920 },
     height: { ideal: 1080 }
   },
-  audio: {
-  echoCancellation: true,
-  noiseSuppression: true,
-  autoGainControl: true
+  audio: true   // ✅ SÓ ISSO!
+})
 }
 });
   } catch (err) {
