@@ -771,6 +771,7 @@ function setupVolumeControl(tile, audioTrack) {
   } catch (err) {
     console.warn("controle de volume indisponível:", err);
   }
+   }
 function attachStreamToTile(tile, stream, isLocal) {
   tile.video.srcObject = stream;
   const audioTrack = stream.getAudioTracks()[0];
