@@ -753,7 +753,7 @@ function setupVolumeControl(tile, audioTrack) {
     gainNode.gain.value = 1;
     source.connect(gainNode).connect(ctx.destination);
     tile.gainNode = gainNode;
-    tile.video.muted = true;
+    tile.video.muted = false;
 
     if (tile.volumeSlider) {
       tile.volumeSlider.addEventListener("input", () => {
