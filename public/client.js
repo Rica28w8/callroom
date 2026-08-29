@@ -564,9 +564,10 @@ btnShare.addEventListener("click", async () => {
   screenStream.getTracks().forEach((track) => {
     peers.forEach((peer) => {
       const sender = peer.pc.addTrack(track, screenStream);
-      if (track.kind === "video") {
-     capSender(sender, { maxBitrate: 4000000, maxFramerate: 60 });}
-    });}
+    if (track.kind === "video") {
+    capSender(sender, { maxBitrate: 4000000, maxFramerate: 60 });
+}
+});
   });
   socket.emit("meta", { type: "screen-start", streamId: screenStream.id });
 
