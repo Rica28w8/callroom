@@ -777,3 +777,4 @@ function attachStreamToTile(tile, stream, isLocal) {
   const audioTrack = stream.getAudioTracks()[0];
   if (!isLocal && audioTrack) setupVolumeControl(tile, audioTrack);
 }
+}
